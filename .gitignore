@@ -13,3 +13,5 @@ data/sample/
 
 .DS_Store
 Thumbs.db
+data/delta/
+data/checkpoints/
