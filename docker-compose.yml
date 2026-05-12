@@ -1,0 +1,41 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    container_name: steam_zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: steam_kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: steam_zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://steam_kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  producer:
+    build:
+      context: .
+      dockerfile: producer/Dockerfile
+    container_name: steam_review_producer
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: steam_kafka:9092
+      KAFKA_TOPIC: steam_reviews
+      DATA_PATH: /app/data/raw/steam_reviews.csv
+      MESSAGE_DELAY_SECONDS: 0.1
+      MAX_MESSAGES: 1000
+    volumes:
+      - ./data:/app/data
