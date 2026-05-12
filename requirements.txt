@@ -1,0 +1,12 @@
+pandas
+numpy
+kaggle
+python-dotenv
+requests
+tqdm
+jupyter
+notebook
+matplotlib
+seaborn
+scikit-learn
+kafka-python

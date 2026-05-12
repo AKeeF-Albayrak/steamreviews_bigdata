@@ -1,12 +1,15 @@
-.venv/
+venv/
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
+
+.env
+.kaggle/
 
 data/raw/
 data/processed/
-delta/
-mlruns/
+data/sample/
 
-.env
+.ipynb_checkpoints/
+
 .DS_Store
+Thumbs.db
