@@ -35,7 +35,26 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: steam_kafka:9092
       KAFKA_TOPIC: steam_reviews
       DATA_PATH: /app/data/raw/steam_reviews.csv
-      MESSAGE_DELAY_SECONDS: 0.1
-      MAX_MESSAGES: 1000
+      MESSAGE_DELAY_SECONDS: 0.0
+      MAX_MESSAGES: 5000000
     volumes:
       - ./data:/app/data
+
+  spark:
+    build:
+      context: .
+      dockerfile: spark/Dockerfile
+    container_name: steam_spark_streaming
+    depends_on:
+      - kafka
+    volumes:
+      - ./data/delta:/app/delta
+      - ./data/checkpoints:/app/checkpoints
+      - ./reports:/app/reports
+      - ./spark/jobs:/app/jobs
+    command: >
+      /opt/spark/bin/spark-submit
+      --driver-memory 4g
+      --conf spark.driver.maxResultSize=2g
+      --packages io.delta:delta-spark_2.12:3.2.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1
+      /app/jobs/stream_steam_reviews_to_delta.py
