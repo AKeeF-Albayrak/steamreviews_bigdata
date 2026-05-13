@@ -12,6 +12,10 @@ Proje kapsamında şu ana kadar tamamlanan kısımlar:
 - Kafka topic adı: `steam_reviews`
 - Producer başarıyla test edildi.
 - Kafka consumer ile topic içindeki mesajların okunabildiği doğrulandı.
+- Spark Structured Streaming ile Kafka verisi Delta Lake katmanlarına aktarıldı.
+- Silver Delta katmanı üzerinden EDA çıktıları üretildi.
+- Logistic Regression sentiment modeli eğitildi.
+- Beş farklı sınıflandırma modeli karşılaştırıldı ve MLflow ile takip edildi.
 
 ---
 
@@ -24,24 +28,35 @@ steamreviews_bigdata/
 ├── data/
 │   ├── raw/
 │   ├── sample/
-│   └── processed/
+│   ├── processed/
+│   ├── delta/
+│   └── checkpoints/
 ├── producer/
 │   ├── producer.py
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── spark/
+│   ├── Dockerfile
 │   ├── jobs/
+│   │   ├── stream_steam_reviews_to_delta.py
+│   │   ├── eda_steam_reviews.py
+│   │   ├── train_sentiment_model.py
+│   │   └── train_compare_models_mlflow.py
 │   └── utils/
 ├── notebooks/
 │   └── check_dataset.py
 ├── ml/
-├── dashboard/
+│   └── models/
 ├── reports/
-├── docs/
+│   ├── eda_outputs/
+│   ├── figures/
+│   ├── ml_outputs/
+│   └── mlruns/
 ├── docker-compose.yml
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
 
 ---
 
@@ -59,7 +74,6 @@ Oluşan Delta yolları:
 ```text
 data/delta/bronze/steam_reviews_raw
 data/delta/silver/steam_reviews_clean
-
 ```
 
 Spark streaming job dosyası:
@@ -74,11 +88,13 @@ spark/jobs/stream_steam_reviews_to_delta.py
 docker compose up -d --build spark
 ```
 
-Streaming job sürekli çalışan bir yapıdadır. İşlem doğrulandıktan sonra durdurmak için:
+Log takibi:
 
 ```bash
-docker stop steam_spark_streaming
+docker logs -f steam_spark_streaming
 ```
+
+Bu job Kafka'daki mevcut veriyi okuyup Bronze Delta katmanına yazar, ardından Bronze Delta verisini temizleyerek Silver Delta katmanını oluşturur. İşlem tamamlandığında otomatik olarak kapanır.
 
 ---
 
@@ -95,7 +111,7 @@ spark/jobs/eda_steam_reviews.py
 Çalıştırma komutu:
 
 ```bash
-docker compose run --rm spark /opt/spark/bin/spark-submit --packages io.delta:delta-spark_2.12:3.2.0 /app/jobs/eda_steam_reviews.py
+docker compose run --rm spark /opt/spark/bin/spark-submit --driver-memory 4g --conf spark.driver.maxResultSize=2g --packages io.delta:delta-spark_2.12:3.2.0 /app/jobs/eda_steam_reviews.py
 ```
 
 EDA sonucunda aşağıdaki CSV analiz çıktıları oluşturulur:
@@ -120,3 +136,117 @@ reports/figures/hourly_trend.png
 ```
 
 Not: `data/raw`, `data/delta` ve `data/checkpoints` klasörleri büyük veri ve çalışma çıktıları içerdiği için GitHub'a gönderilmez. Bu klasörler `.gitignore` içinde tutulur.
+
+---
+
+## Adım 5 - Logistic Regression Sentiment Modeli
+
+Bu adımda Silver Delta katmanındaki temizlenmiş Steam yorumları kullanılarak pozitif/negatif duygu analizi için Logistic Regression modeli eğitilmiştir.
+
+Kullanılan veri:
+
+```text
+data/delta/silver/steam_reviews_clean
+```
+
+Modelleme dosyası:
+
+```text
+spark/jobs/train_sentiment_model.py
+```
+
+Çalıştırma komutu:
+
+```bash
+docker compose run --rm --no-deps spark /opt/spark/bin/spark-submit --driver-memory 4g --conf spark.driver.maxResultSize=2g --packages io.delta:delta-spark_2.12:3.2.0 /app/jobs/train_sentiment_model.py
+```
+
+Üretilen çıktılar:
+
+```text
+reports/ml_outputs/model_metrics.csv
+reports/ml_outputs/confusion_matrix.csv
+reports/ml_outputs/prediction_distribution.csv
+ml/models/sentiment_lr_model
+```
+
+Bu adımda Logistic Regression modeli için Accuracy, F1-score, Precision, Recall, AUC-ROC ve Confusion Matrix hesaplanmıştır.
+
+---
+
+## Adım 6 - Çoklu Model Karşılaştırma ve MLflow Takibi
+
+Bu adımda duygu analizi problemi için beş farklı sınıflandırma modeli karşılaştırılmıştır:
+
+```text
+1. Logistic Regression
+2. Decision Tree Classifier
+3. Random Forest Classifier
+4. Gradient Boosted Trees Classifier
+5. Naive Bayes
+```
+
+Model karşılaştırma dosyası:
+
+```text
+spark/jobs/train_compare_models_mlflow.py
+```
+
+Çalıştırma komutu:
+
+```bash
+docker compose run --rm --no-deps spark /opt/spark/bin/spark-submit --driver-memory 4g --conf spark.driver.maxResultSize=2g --packages io.delta:delta-spark_2.12:3.2.0 /app/jobs/train_compare_models_mlflow.py
+```
+
+Üretilen değerlendirme çıktıları:
+
+```text
+reports/ml_outputs/model_comparison.csv
+reports/ml_outputs/best_model_summary.txt
+reports/ml_outputs/feature_importance_all_models.csv
+reports/ml_outputs/confusion_matrix_logistic_regression_existing.csv
+reports/ml_outputs/confusion_matrix_decision_tree_classifier.csv
+reports/ml_outputs/confusion_matrix_random_forest_classifier.csv
+reports/ml_outputs/confusion_matrix_gradient_boosted_trees_classifier.csv
+reports/ml_outputs/confusion_matrix_naive_bayes.csv
+```
+
+Feature Importance çıktıları:
+
+```text
+reports/ml_outputs/feature_importance_logistic_regression_existing.csv
+reports/ml_outputs/feature_importance_decision_tree_classifier.csv
+reports/ml_outputs/feature_importance_random_forest_classifier.csv
+reports/ml_outputs/feature_importance_gradient_boosted_trees_classifier.csv
+reports/ml_outputs/feature_importance_naive_bayes.csv
+reports/ml_outputs/feature_importance_all_models.csv
+```
+
+MLflow deney kayıtları:
+
+```text
+reports/mlruns/
+```
+
+Kaydedilen modeller:
+
+```text
+ml/models/
+```
+
+Bu adımda her model için Accuracy, F1-score, Precision, Recall, AUC-ROC ve Confusion Matrix hesaplanmıştır. Ayrıca Feature Importance analizi yapılmış ve deneyler MLflow ile loglanmıştır.
+
+En iyi model sonucu:
+
+```text
+Logistic Regression Existing
+```
+
+---
+
+## Önemli Notlar
+
+- `data/raw/steam_reviews.csv` büyük veri dosyası olduğu için GitHub'a gönderilmez.
+- `data/delta/` ve `data/checkpoints/` çalışma sırasında oluşan büyük veri çıktılarıdır ve GitHub'a gönderilmez.
+- Projeyi farklı bilgisayarda çalıştırmak için `data/raw/steam_reviews.csv` dosyasının manuel olarak `data/raw/` klasörüne eklenmesi gerekir.
+- Docker image indirme hataları proje kodundan değil, Docker Hub / internet / DNS bağlantısından kaynaklanabilir.

@@ -1,0 +1,15 @@
+artifact_uri: file:///app/reports/mlruns/445411414107744232/2a6b2cc5ea80497a9945db2e63028743/artifacts
+end_time: 1778665188839
+entry_point_name: ''
+experiment_id: '445411414107744232'
+lifecycle_stage: active
+run_id: 2a6b2cc5ea80497a9945db2e63028743
+run_name: Decision Tree Classifier
+run_uuid: 2a6b2cc5ea80497a9945db2e63028743
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1778665186530
+status: 3
+tags: []
+user_id: root

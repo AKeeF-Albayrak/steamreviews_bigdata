@@ -52,6 +52,7 @@ services:
       - ./data/checkpoints:/app/checkpoints
       - ./reports:/app/reports
       - ./spark/jobs:/app/jobs
+      - ./ml:/app/ml
     command: >
       /opt/spark/bin/spark-submit
       --driver-memory 4g

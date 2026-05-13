@@ -1,0 +1,5 @@
+label_text,prediction_text,count
+negative,negative,4072
+negative,positive,876
+positive,negative,1745
+positive,positive,3163

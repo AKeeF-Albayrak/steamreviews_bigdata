@@ -1,0 +1,151 @@
+model_name,feature,importance
+Logistic Regression Existing,hash_feature_7046,-0.5280946070494866
+Logistic Regression Existing,hash_feature_2836,-0.5167215027864591
+Logistic Regression Existing,hash_feature_8198,0.5077234816962738
+Logistic Regression Existing,hash_feature_16350,0.4652783436537958
+Logistic Regression Existing,hash_feature_7204,0.4475012275415064
+Logistic Regression Existing,hash_feature_10763,0.44579002398669426
+Logistic Regression Existing,hash_feature_6393,-0.43318939319851435
+Logistic Regression Existing,hash_feature_750,0.4282782277781089
+Logistic Regression Existing,hash_feature_5273,0.4278855133409787
+Logistic Regression Existing,hash_feature_19448,-0.4257767038277695
+Logistic Regression Existing,hash_feature_6278,0.42470804626495023
+Logistic Regression Existing,hash_feature_12698,0.4175106986544391
+Logistic Regression Existing,hash_feature_7713,0.41524282512399485
+Logistic Regression Existing,hash_feature_2507,0.40867712327994216
+Logistic Regression Existing,hash_feature_4066,-0.4084920293299279
+Logistic Regression Existing,hash_feature_7482,-0.405080496128231
+Logistic Regression Existing,hash_feature_7736,0.3992002543837842
+Logistic Regression Existing,hash_feature_188,0.39299541630352425
+Logistic Regression Existing,hash_feature_12771,0.39132476604687844
+Logistic Regression Existing,hash_feature_16813,-0.38814925636277814
+Logistic Regression Existing,hash_feature_10332,-0.387546335614203
+Logistic Regression Existing,hash_feature_17933,0.38514727961529416
+Logistic Regression Existing,hash_feature_6585,-0.3835128872005336
+Logistic Regression Existing,hash_feature_19008,0.38286587487235124
+Logistic Regression Existing,hash_feature_4187,-0.3816196702358421
+Logistic Regression Existing,hash_feature_5060,-0.3783662378640835
+Logistic Regression Existing,hash_feature_1949,0.3762849336778124
+Logistic Regression Existing,hash_feature_18285,0.37250961759644485
+Logistic Regression Existing,hash_feature_14012,-0.3688227067510668
+Logistic Regression Existing,hash_feature_18764,-0.36795365876621716
+Decision Tree Classifier,even,0.22244111437521036
+Decision Tree Classifier,great,0.15335039767840453
+Decision Tree Classifier,pc,0.13105250933717266
+Decision Tree Classifier,best,0.11905362248238868
+Decision Tree Classifier,10/10,0.09446836279829272
+Decision Tree Classifier,war,0.060937429185557786
+Decision Tree Classifier,civ,0.05636125965271853
+Decision Tree Classifier,arkham,0.04206395916176715
+Decision Tree Classifier,warface,0.026968787523744604
+Decision Tree Classifier,homeworld,0.02157149384718786
+Decision Tree Classifier,port,0.014792071856262549
+Decision Tree Classifier,waste,0.011155937769922075
+Decision Tree Classifier,worse,0.008810511909528149
+Decision Tree Classifier,ai,0.006527936233709606
+Decision Tree Classifier,creed,0.006409985809993238
+Decision Tree Classifier,boring,0.004649074861609633
+Decision Tree Classifier,refund,0.004311963998813935
+Decision Tree Classifier,huge,0.003362845720564413
+Decision Tree Classifier,overall,0.0024910700753956252
+Decision Tree Classifier,it.,0.002365707782640326
+Decision Tree Classifier,late,0.0020599655760160933
+Decision Tree Classifier,-i,0.0020032331984948027
+Decision Tree Classifier,"sadly,",0.001657086285519598
+Decision Tree Classifier,really,0.001133672879084982
+Decision Tree Classifier,matches,0.0
+Decision Tree Classifier,ten,0.0
+Decision Tree Classifier,ghost,0.0
+Decision Tree Classifier,wanting,0.0
+Decision Tree Classifier,ridiculous,0.0
+Decision Tree Classifier,"mode,",0.0
+Random Forest Classifier,even,0.06245012399504292
+Random Forest Classifier,worst,0.040342857188791964
+Random Forest Classifier,good,0.03586958217702213
+Random Forest Classifier,pc,0.0313946539876655
+Random Forest Classifier,great,0.029909125960802373
+Random Forest Classifier,fix,0.029659289075017987
+Random Forest Classifier,poorly,0.027019091345361443
+Random Forest Classifier,unless,0.02644345209625019
+Random Forest Classifier,tried,0.023401307120971264
+Random Forest Classifier,waste,0.021869452810731677
+Random Forest Classifier,10/10,0.020569923929876832
+Random Forest Classifier,love,0.020300660844404038
+Random Forest Classifier,screen,0.020012563285336474
+Random Forest Classifier,arkham,0.019537205581401918
+Random Forest Classifier,crashes,0.019211078932189353
+Random Forest Classifier,port.,0.01830721727112506
+Random Forest Classifier,batman,0.017787005228538256
+Random Forest Classifier,fun,0.01644114973133125
+Random Forest Classifier,port,0.016314488445193922
+Random Forest Classifier,batmobile,0.01583440621515798
+Random Forest Classifier,unplayable.,0.014802147903976473
+Random Forest Classifier,knight,0.014778569663156488
+Random Forest Classifier,console,0.013857235804503085
+Random Forest Classifier,crash,0.0136789350102061
+Random Forest Classifier,boring.,0.013260540582461849
+Random Forest Classifier,nvidia,0.0127659761925419
+Random Forest Classifier,rocksteady,0.01236395423123213
+Random Forest Classifier,money,0.011385234998412952
+Random Forest Classifier,30fps,0.011046720354198344
+Random Forest Classifier,release,0.010937675896041641
+Gradient Boosted Trees Classifier,good,0.04673144371636154
+Gradient Boosted Trees Classifier,war,0.04241371612147013
+Gradient Boosted Trees Classifier,even,0.04140416253206572
+Gradient Boosted Trees Classifier,batman,0.03781023561964688
+Gradient Boosted Trees Classifier,love,0.02896157440528917
+Gradient Boosted Trees Classifier,crashes,0.02797801388711934
+Gradient Boosted Trees Classifier,worst,0.027211224696542184
+Gradient Boosted Trees Classifier,terrible,0.026392667835207897
+Gradient Boosted Trees Classifier,refund,0.025456534585205113
+Gradient Boosted Trees Classifier,boring,0.02505917039168
+Gradient Boosted Trees Classifier,arkham,0.02490503935087925
+Gradient Boosted Trees Classifier,waste,0.024843537193729583
+Gradient Boosted Trees Classifier,buy,0.024747378981122455
+Gradient Boosted Trees Classifier,fix,0.024651265325572807
+Gradient Boosted Trees Classifier,civ,0.024395644852739
+Gradient Boosted Trees Classifier,money,0.022939503352702208
+Gradient Boosted Trees Classifier,unplayable,0.022856233193286172
+Gradient Boosted Trees Classifier,port,0.019857982082209513
+Gradient Boosted Trees Classifier,awesome,0.018783346395934746
+Gradient Boosted Trees Classifier,pc,0.016652172538567225
+Gradient Boosted Trees Classifier,broken,0.015856130357366643
+Gradient Boosted Trees Classifier,tower,0.015236507054262714
+Gradient Boosted Trees Classifier,amazing,0.014806372873667633
+Gradient Boosted Trees Classifier,:),0.0145483249384245
+Gradient Boosted Trees Classifier,civilization,0.014430442739004196
+Gradient Boosted Trees Classifier,deus,0.013915322036513663
+Gradient Boosted Trees Classifier,9/10,0.013446544310159514
+Gradient Boosted Trees Classifier,warface,0.013437704868241583
+Gradient Boosted Trees Classifier,unplayable.,0.012311656732129734
+Gradient Boosted Trees Classifier,great,0.011648504398684163
+Naive Bayes,batmobile,8.104805887533718
+Naive Bayes,rocksteady,7.884710243918228
+Naive Bayes,warface,7.8302289797684725
+Naive Bayes,wb,7.767836833370922
+Naive Bayes,warner,7.060649911362309
+Naive Bayes,marko,6.862038445006249
+Naive Bayes,batmobile.,6.725144211930871
+Naive Bayes,riddler,6.670637981520189
+Naive Bayes,elsword,6.617755660753939
+Naive Bayes,batman:,6.512871379980709
+Naive Bayes,"batmobile,",6.509221932925104
+Naive Bayes,gotham,6.507934978448649
+Naive Bayes,capcom,6.47859693043843
+Naive Bayes,crytek,6.463202599995682
+Naive Bayes,ini,6.403359580690703
+Naive Bayes,.ini,6.3987456352639
+Naive Bayes,harley,6.359747857392861
+Naive Bayes,rocksteady.,6.32597502879254
+Naive Bayes,ports,6.321119453644183
+Naive Bayes,metro,6.320708662281691
+Naive Bayes,"rocksteady,",6.239979665043604
+Naive Bayes,marin,6.079849633748417
+Naive Bayes,quinn,6.075954917682459
+Naive Bayes,scarecrow,6.058929669289107
+Naive Bayes,bros.,6.054022771873399
+Naive Bayes,wb.,6.031272287221196
+Naive Bayes,arica,5.991538670370474
+Naive Bayes,kog,5.991271316428154
+Naive Bayes,stamina,5.903063992090225
+Naive Bayes,sokobond,5.888362847902286
