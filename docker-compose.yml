@@ -59,3 +59,20 @@ services:
       --conf spark.driver.maxResultSize=2g
       --packages io.delta:delta-spark_2.12:3.2.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1
       /app/jobs/stream_steam_reviews_to_delta.py
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: steam_dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./reports:/app/reports:ro
+      - ./data/delta:/app/delta:ro
+      - ./ml/models:/app/ml/models:ro
+    environment:
+      REPORTS_PATH: /app/reports
+      DELTA_PATH: /app/delta
+      MODELS_PATH: /app/ml/models
+    restart: unless-stopped
