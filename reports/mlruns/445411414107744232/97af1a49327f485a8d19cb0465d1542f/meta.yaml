@@ -1,0 +1,15 @@
+artifact_uri: file:///app/reports/mlruns/445411414107744232/97af1a49327f485a8d19cb0465d1542f/artifacts
+end_time: 1778665471117
+entry_point_name: ''
+experiment_id: '445411414107744232'
+lifecycle_stage: active
+run_id: 97af1a49327f485a8d19cb0465d1542f
+run_name: Gradient Boosted Trees Classifier
+run_uuid: 97af1a49327f485a8d19cb0465d1542f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1778665468787
+status: 3
+tags: []
+user_id: root

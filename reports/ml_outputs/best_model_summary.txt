@@ -1,0 +1,8 @@
+Best Model Summary
+==================
+model_name: Logistic Regression Existing
+accuracy: 0.8794642857142857
+f1_score: 0.8794492156898319
+weighted_precision: 0.879749792358804
+weighted_recall: 0.8794642857142857
+area_under_roc: 0.9423792898466791

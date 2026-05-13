@@ -6,4 +6,4 @@ COPY spark/jobs /app/jobs
 
 USER root
 RUN mkdir -p /app/delta /app/checkpoints /app/reports/figures /app/reports/eda_outputs
-RUN pip install pandas matplotlib
+RUN pip install pandas matplotlib mlflow
