@@ -16,6 +16,7 @@ Proje kapsamında şu ana kadar tamamlanan kısımlar:
 - Silver Delta katmanı üzerinden EDA çıktıları üretildi.
 - Logistic Regression sentiment modeli eğitildi.
 - Beş farklı sınıflandırma modeli karşılaştırıldı ve MLflow ile takip edildi.
+- Streamlit tabanlı çok sayfalı interaktif dashboard oluşturuldu ve Docker servisi olarak çalıştırıldı.
 
 ---
 
@@ -52,6 +53,18 @@ steamreviews_bigdata/
 │   ├── figures/
 │   ├── ml_outputs/
 │   └── mlruns/
+├── dashboard/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   ├── app.py
+│   ├── lib/
+│   │   ├── io.py
+│   │   └── viz.py
+│   └── pages/
+│       ├── 01_EDA.py
+│       ├── 02_Features.py
+│       ├── 03_Model_Comparison.py
+│       └── 04_Best_Model.py
 ├── docker-compose.yml
 ├── requirements.txt
 ├── README.md
@@ -241,6 +254,65 @@ En iyi model sonucu:
 ```text
 Logistic Regression Existing
 ```
+
+---
+
+## Adım 7 - Streamlit Dashboard
+
+Bu adımda EDA bulgularını ve model sonuçlarını görselleştiren çok sayfalı interaktif bir Streamlit dashboard oluşturulmuştur. Dashboard, Docker servisi olarak `docker-compose.yml` içine eklenmiş ve `http://localhost:8501` adresinden erişilebilir.
+
+Dashboard dosyaları:
+
+```text
+dashboard/
+├── Dockerfile
+├── requirements.txt
+├── app.py                        ← Landing page (pipeline özeti, metrikler)
+├── lib/
+│   ├── io.py                     ← CSV okuma ve Silver Delta okuma fonksiyonları
+│   └── viz.py                    ← Plotly grafik fonksiyonları
+└── pages/
+    ├── 01_EDA.py                 ← Keşifsel Veri Analizi (10 bölüm)
+    ├── 02_Features.py            ← Feature Engineering (TF-IDF pipeline)
+    ├── 03_Model_Comparison.py    ← 5 Model karşılaştırması
+    └── 04_Best_Model.py          ← En iyi model derinlemesine analizi
+```
+
+ROC Curve için test seti tahminlerini dışa aktaran Spark job:
+
+```text
+spark/jobs/export_best_predictions.py
+```
+
+Bu job'ı çalıştırmak için (Silver Delta ve eğitilmiş model gereklidir):
+
+```bash
+docker compose run --rm --no-deps spark /opt/spark/bin/spark-submit --driver-memory 4g --conf spark.driver.maxResultSize=2g --packages io.delta:delta-spark_2.12:3.2.0 /app/jobs/export_best_predictions.py
+```
+
+Üretilen çıktı:
+
+```text
+reports/ml_outputs/best_model_predictions.csv   ← 40.000 satır, probability skorları
+```
+
+Dashboard'u başlatmak için:
+
+```bash
+docker compose up -d --build dashboard
+```
+
+Tarayıcıdan erişim: `http://localhost:8501`
+
+Dashboard sayfaları ve içerikleri:
+
+| Sayfa | İçerik |
+|---|---|
+| Landing (app.py) | Pipeline mimarisi, 4 özet metrik kartı |
+| 01 EDA | Sentiment dağılımı (pie), histogram, area chart, stacked bar, scatter, 10 bölüm |
+| 02 Features | TF-IDF pipeline diyagramı, Top-20 feature grafikleri (RF/GBT/DT) |
+| 03 Model Comparison | 5×5 grouped bar chart, metrik tablosu, eğitim koşulları |
+| 04 Best Model | Confusion matrix (renkli), ROC curve (AUC=0.9424), feature importance |
 
 ---
 
